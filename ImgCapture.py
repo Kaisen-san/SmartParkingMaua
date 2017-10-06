@@ -15,7 +15,7 @@ if not os.path.exists(imgPath):
 
 # inicializa camera
 pygame.camera.init()
-cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (320,240))
+cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (320,240)) # Investigate why image resolution is set to 176x144 instead of 320x240
 cam.start()
 
 # inicializa a distancia minima
