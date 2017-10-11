@@ -2,7 +2,7 @@ import os, sys
 
 import tensorflow as tf
 
-def main(image_path):
+def classify(image_path):
 
 	os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
