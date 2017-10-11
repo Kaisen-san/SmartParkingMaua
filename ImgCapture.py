@@ -7,7 +7,7 @@ import pygame.image
 import os
 
 # define local onde salvar as imagens
-imgPath = "$HOME/SmartPartkingMaua/images"
+imgPath = "$HOME/SmartParkingMaua/images"
 
 # cria diretorio onde as imagens serao salvas caso ele nao exista
 if not os.path.exists(imgPath):
