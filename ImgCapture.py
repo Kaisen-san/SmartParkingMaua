@@ -5,9 +5,10 @@ import sys
 import pygame.camera
 import pygame.image
 import os
+from os.path import expanduser
 
 # define local onde salvar as imagens
-imgPath = "$HOME/SmartParkingMaua/images"
+imgPath = expanduser("~")  + "/SmartParkingMaua/images"
 
 
 # cria diretorio onde as imagens serao salvas caso ele nao exista
