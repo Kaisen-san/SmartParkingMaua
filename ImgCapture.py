@@ -5,12 +5,13 @@ import sys
 import pygame.camera
 import pygame.image
 import os
+from os.path import expanduser
 import tensorflow as tf
 from multiprocessing import Process
 from label_image import *
 
 # define local onde salvar as imagens
-imgPath = "$HOME/SmartPartkingMaua/images"
+imgPath = expanduser("~") + "/SmartParkingMaua/images"
 
 # cria diretorio onde as imagens serao salvas caso ele nao exista
 if not os.path.exists(imgPath):
@@ -69,20 +70,15 @@ def GetSensorValue():
 
 
 # Funcao que captura e salva a imagem da camera
-def TakePicture(imgCount):
+def TakePicture(imgName):
     # captura a imagem (eh necessario rodar o comando 3 vezes para poder capturar a imagem atual)
     img = cam.get_image()
     img = cam.get_image()
     img = cam.get_image()
     
     # define o nome da imagem de acordo com o numero do contador e a salva localmente
-    imgName = imgPath + '/img_' + str(imgCount) + '.jpg'
-    pygame.image.save(img, imgName)
-
-
-
-# inicializa contador de fotos
-#imgCount = 0
+    imgFullPath = imgPath + '/' + imgName
+    pygame.image.save(img, imgFullPath)
 
 
 # Programa que busca o arquivo no path desejado
@@ -93,48 +89,52 @@ def find(name, path):
 
 
 # Programa que realiza a captura da imagem apos um trigger do sensor
-def CaptureImage(path):
+def CaptureImg():
 	imgCount=1
 	while (1):
 	        # pega o valor no sensor de proximidade
 		sensorValue = GetSensorValue()	
-		name="img_"+imgCount+".jpg"
+		
+		# define nome da imagem
+		imgName = "img_" + str(imgCount) + ".jpg"
+		
 		# compara com valor atual do sensor com a distancia minima definida
 		if (sensorValue < minDist):
-		# mostra a distancia atual do sensor
-		
-		if find(name,path) == "":
-			TakePicture(imgCount)
-			imgCount=1
-		else :
-			imgCount+=1
-		# nao captura novas imagens enquanto o valor atual do sensor for 			menor que a distancia minida definida
-	            while (sensorValue < minDist):
-	                # compara com valor atual do sensor com a distancia minima 				definida
-	                sensorValue = GetSensorValue()
+			# mostra a distancia atual do sensor
+			if find(imgName, imgPath) == "":
+				TakePicture(imgName)
+				imgCount=1
+			else:
+				imgCount+=1
+			
+			# nao captura novas imagens enquanto o valor atual do sensor for menor que a distancia minida definida
+			while (sensorValue < minDist):
+				# compara com valor atual do sensor com a distancia minima definida
+				sensorValue = GetSensorValue()
 		                
 
 
 # Programa que classifica a imagem na fila e a deleta apos o tratamento
-def classifyImg(path):
-	i=1
+def classifyImg():
+	imgCount=1
 	while(1):
-		name="img_"+i+".jpg"
-		if find(name,path) != "":
-			classify(path+name)
-			os.remove(path+name)
-			i+=1
+		imgName="img_" + str(imgCount) + ".jpg"
+		if find(name, imgPath) != "":
+			imgFullPath = imgPath + '/' + imgName
+			classify(imgFullPath)
+			os.remove(imgFullPath)
+			imgCount+=1
 		else:
-			i=1
+			imgCount=1
 			time.sleep(10)
 
 
 			
 if __name__ == '__main__':
-    p = Process(target=CaptureImage, args=())
-    p1 = Process(target=classifyImg, args=(imgPath,))
+    p = Process(target=CaptureImg, args=())
     p.start()
     p.join()
+    p1 = Process(target=classifyImg, args=())
     p1.start()
     p1.join()
 

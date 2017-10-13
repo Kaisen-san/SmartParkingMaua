@@ -7,7 +7,7 @@ def classify(image_path):
 	os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 	# change this as you see fit
-	image_path = sys.argv[1]
+	#image_path = sys.argv[1]
 
 	# Read in the image_data
 	#image_data = tf.gfile.FastGFile(image_path, 'rb').read()
