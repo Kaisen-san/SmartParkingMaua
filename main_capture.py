@@ -6,9 +6,7 @@ import pygame.camera
 import pygame.image
 import os
 from os.path import expanduser
-import tensorflow as tf
-from multiprocessing import Process
-from label_image import *
+
 
 # define local onde salvar as imagens
 imgPath = expanduser("~") + "/SmartParkingMaua/images"
@@ -125,24 +123,6 @@ def CaptureImg():
             while (sensorValue < minDist):
                 # compara com valor atual do sensor com a distancia minima definida
                 sensorValue = GetSensorValue()
-		                
-
-
-# Programa que classifica a imagem na fila e a deleta apos o tratamento
-def classifyImg():
-    print("classifyImg in")
-    imgCount=1
-    while(1):
-        imgName = "img_" + str(imgCount) + ".jpg"
-        if (find(imgName, imgPath) != None):
-            imgFullPath = imgPath + '/' + imgName
-            classify(imgFullPath)
-            os.remove(imgFullPath)
-            imgCount+=1
-        else:
-            imgCount=1
-            time.sleep(10)
-
 
 			
 if (__name__ == '__main__'):
