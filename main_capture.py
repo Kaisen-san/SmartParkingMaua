@@ -10,7 +10,6 @@ from os.path import expanduser
 
 # define local onde salvar as imagens
 imgPath = expanduser("~") + "/SmartParkingMaua/images"
-print(imgPath)
 
 # cria diretorio onde as imagens serao salvas caso ele nao exista
 if not os.path.exists(imgPath):
@@ -70,19 +69,14 @@ def GetSensorValue():
 
 # Funcao que captura e salva a imagem da camera
 def TakePicture(imgName):
-    print("TakePicture in")
     # captura a imagem (eh necessario rodar o comando 3 vezes para poder capturar a imagem atual)
     img = cam.get_image()
-    print("1")
     img = cam.get_image()
-    print("2")
     img = cam.get_image()
-    print("3")
     
     
     # define o nome da imagem de acordo com o numero do contador e a salva localmente
     imgFullPath = imgPath + '/' + imgName
-    print(imgFullPath)
     pygame.image.save(img, imgFullPath)
 
 
@@ -95,7 +89,6 @@ def find(name, path):
 
 # Programa que realiza a captura da imagem apos um trigger do sensor
 def CaptureImg():
-    print("CaptureImg in")
     imgCount=1
     while (1):
         # pega o valor no sensor de proximidade
@@ -103,19 +96,17 @@ def CaptureImg():
 		
         # define nome da imagem
         imgName = "img_" + str(imgCount) + ".jpg"
-        print(imgName)
 		
         # compara com valor atual do sensor com a distancia minima definida
         if (sensorValue < minDist):
-            print("CaptureImg in")
             # mostra a distancia atual do sensor
             print(find(imgName, imgPath))
             while(find(imgName, imgPath) != None):
                 imgCount+=1
                 imgName = "img_" + str(imgCount) + ".jpg"
                 
-            print("Before TakePicture")
             TakePicture(imgName)
+            print(imgName)
             imgCount=1
 
                 

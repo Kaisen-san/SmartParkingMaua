@@ -9,7 +9,6 @@ from label_image import *
 
 # define local onde salvar as imagens
 imgPath = expanduser("~") + "/SmartParkingMaua/images"
-print(imgPath)
 
 # cria diretorio onde as imagens serao salvas caso ele nao exista
 if not os.path.exists(imgPath):
@@ -23,10 +22,10 @@ def find(name, path):
 
 # Programa que classifica a imagem na fila e a deleta apos o tratamento
 def classifyImg():
-    print("classifyImg in")
     imgCount=1
     while(1):
         imgName = "img_" + str(imgCount) + ".jpg"
+        
         if (find(imgName, imgPath) != None):
             imgFullPath = imgPath + '/' + imgName
             classify(imgFullPath)
@@ -34,8 +33,9 @@ def classifyImg():
             imgCount+=1
         else:
             imgCount=1
-            time.sleep(1)
 
+        print(imgName)
+        time.sleep(5)
 
 if (__name__ == '__main__'):
     classifyImg()
