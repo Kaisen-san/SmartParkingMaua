@@ -25,17 +25,17 @@ def classifyImg():
     imgCount=1
     while(1):
         imgName = "img_" + str(imgCount) + ".jpg"
-        
-        if (find(imgName, imgPath) != None):
+
+        while(find(imgName, imgPath) != None):
             imgFullPath = imgPath + '/' + imgName
             classify(imgFullPath)
             os.remove(imgFullPath)
             imgCount+=1
-        else:
-            imgCount=1
-
+            imgName = "img_" + str(imgCount) + ".jpg"
+            time.sleep(20)
+        
+        imgCount=1
         print(imgName)
-        time.sleep(5)
 
 if (__name__ == '__main__'):
     classifyImg()

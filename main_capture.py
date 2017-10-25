@@ -7,7 +7,6 @@ import pygame.image
 import os
 from os.path import expanduser
 
-
 # define local onde salvar as imagens
 imgPath = expanduser("~") + "/SmartParkingMaua/images"
 
@@ -17,7 +16,7 @@ if not os.path.exists(imgPath):
 
 # inicializa camera
 pygame.camera.init()
-cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (320,240)) # Investigate why image resolution is set to 176x144 instead of 320x240
+cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (176,144)) # Investigate why image resolution is set to 176x144 instead of 320x240
 cam.start()
 
 # inicializa a distancia minima
@@ -100,16 +99,14 @@ def CaptureImg():
         # compara com valor atual do sensor com a distancia minima definida
         if (sensorValue < minDist):
             # mostra a distancia atual do sensor
-            print(find(imgName, imgPath))
             while(find(imgName, imgPath) != None):
                 imgCount+=1
                 imgName = "img_" + str(imgCount) + ".jpg"
                 
             TakePicture(imgName)
-            print(imgName)
             imgCount=1
-
-                
+            print(imgName)
+ 
             # nao captura novas imagens enquanto o valor atual do sensor for menor que a distancia minida definida
             while (sensorValue < minDist):
                 # compara com valor atual do sensor com a distancia minima definida
@@ -118,5 +115,4 @@ def CaptureImg():
 			
 if (__name__ == '__main__'):
     CaptureImg()
-
 
