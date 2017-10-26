@@ -7,6 +7,7 @@ import pygame.image
 import os
 from os.path import expanduser
 
+
 # define local onde salvar as imagens
 imgPath = expanduser("~")  + "/SmartParkingMaua/images"
 
@@ -15,13 +16,16 @@ imgPath = expanduser("~")  + "/SmartParkingMaua/images"
 if not os.path.exists(imgPath):
     os.makedirs(imgPath)
 
+
 # inicializa camera
 pygame.camera.init()
-cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (320,240)) # Investigate why image resolution is set to 176x144 instead of 320x240
+cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (176,144)) # Investigate why image resolution is set to 176x144 instead of 320x240
 cam.start()
 
+
 # inicializa a distancia minima
-minDist = 60
+maxDist = 200
+
 
 # Funcao que retorna o valor do sensor de proximidade
 def GetSensorValue():
@@ -68,41 +72,53 @@ def GetSensorValue():
 
 
 # Funcao que captura e salva a imagem da camera
-def TakePicture(imgCount):
+def TakePicture(imgName):
     # captura a imagem (eh necessario rodar o comando 3 vezes para poder capturar a imagem atual)
     img = cam.get_image()
     img = cam.get_image()
     img = cam.get_image()
     
     # define o nome da imagem de acordo com o numero do contador e a salva localmente
-    imgName = imgPath + '/img_' + str(imgCount) + '.jpg'
-    pygame.image.save(img, imgName)
+    imgFullPath = imgPath + '/' + imgName
+    pygame.image.save(img, imgFullPath)
 
 
-
-# inicializa contador de fotos
-imgCount = 0
-
-try:
-    while (1):
-        # pega o valor no sensor de proximidade
-        sensorValue = GetSensorValue()
-        
-        # compara com valor atual do sensor com a distancia minima definida
-        if (sensorValue < minDist):
-            # mostra a distancia atual do sensor
-            #print("Distance: {0:.2f}".format(triggerValue))
+def CaptureImg():
+    try:
+        while (1):
+            # pega o valor no sensor de proximidade
+            sensorValue = GetSensorValue()
             
-            # incrementa o contador de fotos e realiza captura da imagem 
-            imgCount += 1
-            TakePicture(imgCount)
-            
-            # nao captura novas imagens enquanto o valor atual do sensor for menor que a distancia minida definida
-            while (sensorValue < minDist):
-                # compara com valor atual do sensor com a distancia minima definida
-                sensorValue = GetSensorValue()
+            # compara com valor atual do sensor com a distancia minima definida
+            if (sensorValue < maxDist):
+                # mostra a distancia atual do sensor
+                #print("Distance: {0:.2f}".format(triggerValue))
+
+                # inicializa/retorna o contador pra 1, uma vez que as imagens sao deletas conforme são classificadas
+                imgCount=1
+
+                # define nome da imagem
+                imgName = "img_" + str(imgCount) + ".jpg"
+
+                # procura pelo nome de imagem disponivel mais proximo
+                while(Find(imgName, imgPath) != None):
+                    imgCount+=1
+                    imgName = "img_" + str(imgCount) + ".jpg"
+
+                # captura e salva a imagem
+                TakePicture(imgName)
+
+                #print(imgName) # imprimi nome da imagem capturada
                 
-# Pausa a execucao do while quando pressionamos CTRL-C
-except KeyboardInterrupt:
-    pass
+                # nao captura novas imagens enquanto o valor atual do sensor for menor que a distancia minida definida
+                while (sensorValue < maxDist):
+                    # compara com valor atual do sensor com a distancia minima definida
+                    sensorValue = GetSensorValue()
+                    
+    # Pausa a execucao do while quando pressionamos CTRL-C
+    except KeyboardInterrupt:
+        pass
 
+
+if (__name__ == '__main__'):
+    CaptureImg()
