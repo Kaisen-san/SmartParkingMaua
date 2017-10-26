@@ -17,7 +17,7 @@ if not os.path.exists(imgPath):
     os.makedirs(imgPath)
 
 
-# inicializa camera
+# define/inicializa a distancia maxima
 pygame.camera.init()
 cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (176,144)) # Investigate why image resolution is set to 176x144 instead of 320x240
 cam.start()
@@ -27,7 +27,7 @@ cam.start()
 maxDist = 200
 
 
-# Funcao que retorna o valor do sensor de proximidade
+# funcao que retorna o valor do sensor de proximidade
 def GetSensorValue():
     GPIO.setmode(GPIO.BCM)
 
@@ -37,7 +37,7 @@ def GetSensorValue():
     # gpio 24
     TRIG_PIN = 24
 
-    # Velocidade do som 340,29 m/s -&gt; 34029 cm/s
+    # velocidade do som 340,29 m/s -&gt; 34029 cm/s
     SPEED_OF_SOUND = 34029
 
     # configura os pinos
@@ -52,11 +52,11 @@ def GetSensorValue():
     time.sleep(0.00001)
     GPIO.output(TRIG_PIN, GPIO.LOW)
 
-    # Nosso primeiro passo deve ser o de gravar o ultimo baixo timestamp (time_start) para o ECHO (início de pulso), pouco antes do sinal de retorno.
+    # nosso primeiro passo deve ser o de gravar o ultimo baixo timestamp (time_start) para o ECHO (início de pulso), pouco antes do sinal de retorno.
     while GPIO.input(ECHO_PIN) == GPIO.LOW:
         time_start = time.time()
 
-    # Uma vez que um sinal é recebido, o valor é alterado a partir de baixo (LOW) e alta (HIGH), e o sinal irá permanecer elevada durante a duração do impulso de eco. portanto, precisamos também da última alta timestamp para o ECHO (time_end).
+    # uma vez que um sinal é recebido, o valor é alterado a partir de baixo (LOW) e alta (HIGH), e o sinal irá permanecer elevada durante a duração do impulso de eco. portanto, precisamos também da última alta timestamp para o ECHO (time_end).
     while GPIO.input(ECHO_PIN) == GPIO.HIGH:
         time_end = time.time()
 
@@ -71,7 +71,14 @@ def GetSensorValue():
     return distance
 
 
-# Funcao que captura e salva a imagem da camera
+# programa que busca o arquivo no path desejado
+def Find(name, path):
+    for root, dirs, files in os.walk(path):
+        if name in files:
+            return os.path.join(root, name)
+
+
+# funcao que captura e salva a imagem da camera
 def TakePicture(imgName):
     # captura a imagem (eh necessario rodar o comando 3 vezes para poder capturar a imagem atual)
     img = cam.get_image()
@@ -115,7 +122,7 @@ def CaptureImg():
                     # compara com valor atual do sensor com a distancia minima definida
                     sensorValue = GetSensorValue()
                     
-    # Pausa a execucao do while quando pressionamos CTRL-C
+    # pausa a execucao do while quando pressionamos CTRL-C
     except KeyboardInterrupt:
         pass
 
