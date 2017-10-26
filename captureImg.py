@@ -13,11 +13,11 @@ cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (176,144)) # Investi
 cam.start()
 
 
-# inicializa a distancia minima
-minDist = 60
+# define/inicializa a distancia maxima
+maxDist = 200
 
 
-# Funcao que retorna o valor do sensor de proximidade
+# funcao que retorna o valor do sensor de proximidade
 def GetSensorValue():
     GPIO.setmode(GPIO.BCM)
 
@@ -61,7 +61,7 @@ def GetSensorValue():
     return distance
 
 
-# Funcao que captura e salva a imagem da camera
+# funcao que captura e salva a imagem da camera
 def TakePicture(imgName):
     # captura a imagem (eh necessario rodar o comando 3 vezes para poder capturar a imagem atual)
     img = cam.get_image()
@@ -76,18 +76,20 @@ def TakePicture(imgName):
 # programa que realiza a captura da imagem apos um trigger do sensor
 def CaptureImg():
     while (1):
-        # inicializa/retorna o contador pra 1, uma vez que as imagens sao deletas conforme são classificadas
-        imgCount=1
-            
         # pega o valor no sensor de proximidade
         sensorValue = GetSensorValue()	
-		
-        # define nome da imagem
-        imgName = "img_" + str(imgCount) + ".jpg"
-		
+
         # compara com valor atual do sensor com a distancia minima definida
-        if (sensorValue < minDist):
-            
+        if (sensorValue < maxDist):
+            # mostra a distancia atual do sensor
+            #print("Distance: {0:.2f}".format(triggerValue))
+
+            # inicializa/retorna o contador pra 1, uma vez que as imagens sao deletas conforme são classificadas
+            imgCount=1
+
+            # define nome da imagem
+            imgName = "img_" + str(imgCount) + ".jpg"
+
             # procura pelo nome de imagem disponivel mais proximo
             while(Find(imgName, imgPath) != None):
                 imgCount+=1
@@ -95,11 +97,11 @@ def CaptureImg():
 
             # captura e salva a imagem
             TakePicture(imgName)
-            
+
             #print(imgName) # imprimi nome da imagem capturada
- 
+
             # nao captura novas imagens enquanto o valor atual do sensor for menor que a distancia minida definida
-            while (sensorValue < minDist):
+            while (sensorValue < maxDist):
                 # compara com valor atual do sensor com a distancia minima definida
                 sensorValue = GetSensorValue()
 
