@@ -9,12 +9,12 @@ from commonFunctions import *
 
 # inicializa camera
 pygame.camera.init()
-cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (176,144)) # Investigate why image resolution is set to 176x144 instead of 320x240
+cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (176,144))
 cam.start()
 
 
 # define/inicializa a distancia maxima
-maxDist = 200
+maxDist = 60
 
 
 # funcao que retorna o valor do sensor de proximidade
@@ -82,7 +82,7 @@ def CaptureImg():
         # compara com valor atual do sensor com a distancia minima definida
         if (sensorValue < maxDist):
             # mostra a distancia atual do sensor
-            #print("Distance: {0:.2f}".format(triggerValue))
+            #print("Distance: {0:.2f}".format(sensorValue))
 
             # inicializa/retorna o contador pra 1, uma vez que as imagens sao deletas conforme são classificadas
             imgCount=1
