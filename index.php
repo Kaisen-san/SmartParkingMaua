@@ -12,7 +12,7 @@ $gate = $obj['gate'];
 
 # Show post data
 var_dump($obj);
-echo "<br>"
+echo "<br>";
 
 # Convert post variables to DB format
 if ($action == "exit") {
