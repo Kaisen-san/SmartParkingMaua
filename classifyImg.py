@@ -37,13 +37,15 @@ def ClassifyImg():
             os.remove(imgFullPath)
 
             # imprimi nome da imagem classificada/removida
-            #print(imgName)
+            print("Classified/Deleted image name:" + imgName)
 
             # atualiza as variaveis utilizadas
             imgCount+=1
             imgName = "img_" + str(imgCount) + ".jpg"
             imgFullPath = imgPath + '/' + imgName
 
+            # Linha em branco no log
+            print()
 
 if (__name__ == '__main__'):
     ClassifyImg()

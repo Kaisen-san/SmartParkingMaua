@@ -16,19 +16,19 @@ def Post(action):
     # Initialize INI file
     config = configparser.ConfigParser()
     config.read('localInfo.ini')
-
-    # Set post URL
-    r = requests.post('http://localhost/spmp', json={"key": "value"})
-    #print(r.status_code)
-
+    
     # Set JSON variables
     timestamp = int(time.time())
     gate = config['Local']['Gate']
 
     # Send information
-    r.json()
-    {
+    url = 'https://smartparkingmaua.000webhostapp.com/'
+    payload = {
         "timestamp": timestamp,
         "action": action,
         "gate": gate
     }
+
+    # Set post URL
+    r = requests.post(url, json=payload)
+    print("Post status: %i" % r.status_code)

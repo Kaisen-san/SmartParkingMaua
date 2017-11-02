@@ -7,6 +7,10 @@ import pygame.image
 from commonFunctions import *
 
 
+# desabilita alertas do GPIO
+GPIO.setwarnings(False)
+
+
 # inicializa camera
 pygame.camera.init()
 cam = pygame.camera.Camera(pygame.camera.list_cameras()[0], (176,144))
@@ -82,7 +86,7 @@ def CaptureImg():
         # compara com valor atual do sensor com a distancia minima definida
         if (sensorValue < maxDist):
             # mostra a distancia atual do sensor
-            #print("Distance: {0:.2f}".format(sensorValue))
+            print("Sensor distance: {0:.2f}".format(sensorValue))
 
             # inicializa/retorna o contador pra 1, uma vez que as imagens sao deletas conforme são classificadas
             imgCount=1
@@ -98,12 +102,15 @@ def CaptureImg():
             # captura e salva a imagem
             TakePicture(imgName)
 
-            #print(imgName) # imprimi nome da imagem capturada
+            print("Saved image name: " + imgName) # imprimi nome da imagem capturada
 
             # nao captura novas imagens enquanto o valor atual do sensor for menor que a distancia minida definida
             while (sensorValue < maxDist):
                 # compara com valor atual do sensor com a distancia minima definida
                 sensorValue = GetSensorValue()
+
+            # Linha em branco no log
+            print()
 
 
 if (__name__ == '__main__'):

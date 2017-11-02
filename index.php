@@ -10,13 +10,13 @@ $timestamp = $obj['timestamp'];
 $action = $obj['action'];
 $gate = $obj['gate'];
 
-#var_dump($obj);
+var_dump($obj);
 
 # Convert post variables to DB format
-if ($action == "entrance") {
-    $action = 1;
-} elseif ($action == "exit") {
+if ($action == "exit") {
     $action = 0;
+} elseif ($action == "entrance") {
+    $action = 1;
 }
 
 if ($gate == "main") {
@@ -27,9 +27,9 @@ if ($gate == "main") {
 
 # Set DB credentials
 $servername = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'spm';
+$username = 'id3479526_maua';
+$password = 'smartparking';
+$dbname = 'id3479526_spmdb';
 $dbtable = 'tbParking';
 
 # Create connection
@@ -44,7 +44,7 @@ if ($conn->connect_error) {
 $sql = "INSERT INTO $dbtable (timestamp, action, gate)
 VALUES (FROM_UNIXTIME($timestamp), $action, $gate)";
 
-#echo $sql;
+echo "SQL query: " . $sql;
 
 # Check query
 if ($conn->query($sql) === TRUE) {
