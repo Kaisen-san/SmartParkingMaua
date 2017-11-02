@@ -1,13 +1,25 @@
+# Import libraries
 import requests
 import time
+import configparser
 
-r = requests.post('http://httpbin.org/post', json={"key": "value"})
-#print(r.status_code)
+def Post(action):
+    # Initialize INI file
+    config = configparser.ConfigParser()
+    config.read('LocalInfo.INI')
 
-timestamp = int(time.time())
-r.json()
-{
-    "time": timestamp,
-    "acao": "entrada",
-    "portao": "principal"
-}
+    # Set post URL
+    r = requests.post('http://httpbin.org/post', json={"key": "value"})
+    #print(r.status_code)
+
+    # Set JSON variables
+    timestamp = int(time.time())
+    gate = config['Local']['gate']
+
+    # Send information
+    r.json()
+    {
+        "timestamp": timestamp,
+        "action": action,
+        "portao": gate
+    }
