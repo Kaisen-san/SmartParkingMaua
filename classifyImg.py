@@ -3,7 +3,7 @@ import time
 import os
 import tensorflow as tf
 from multiprocessing import Process
-from label_image import *
+from classifier import *
 from commonFunctions import *
 
 

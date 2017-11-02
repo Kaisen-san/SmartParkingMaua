@@ -3,13 +3,20 @@ import requests
 import time
 import configparser
 
+minPrecision = 0.7
+
+def ValidatePost(action, score):
+    # Check if the current score is higher than the minimum acceptable precision
+    if (score > minPrecision):
+        Post(action)
+
 def Post(action):
     # Initialize INI file
     config = configparser.ConfigParser()
     config.read('LocalInfo.INI')
 
     # Set post URL
-    r = requests.post('http://httpbin.org/post', json={"key": "value"})
+    r = requests.post('http://localhost/spmp', json={"key": "value"})
     #print(r.status_code)
 
     # Set JSON variables
