@@ -1,0 +1,13 @@
+<?php
+
+$body = file_get_content('php:input');
+$body = trim($body);
+$obj = json_decode($body,true);
+
+$time = $obj['time'];
+$acao = $obj['acao'];
+$portao = $obj['portao'];
+
+$sql = "SELECT * FROM tbParking WHERE portao = ".$portao;
+
+echo $sql;
