@@ -1,6 +1,6 @@
 <?php
 
-$body = file_get_content('php://input');
+$body = file_get_contents('php://input');
 $body = trim($body);
 $obj = json_decode($body, true);
 
@@ -24,25 +24,28 @@ if ($gate == "main") {
 
 
 # DB credentials
-$servername = "localhost";
-$username = "spm";
-$password = "maua"
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'spm';
+$dbtable = 'tbParking';
 
 # Create connection
-$conn = new mysqli($servername, $username, $password);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 # Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO tbParking (timestamp, action, gate)
+$sql = "INSERT INTO $dbtable (timestamp, action, gate)
 VALUES ($timestamp, $action, $gate)";
+#echo $sql;
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {
-    echo "Error: " . $sql . "<br>" . $conn-error;
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
 $conn->close();
