@@ -10,7 +10,9 @@ $timestamp = $obj['timestamp'];
 $action = $obj['action'];
 $gate = $obj['gate'];
 
+# Show post data
 var_dump($obj);
+echo "<br>"
 
 # Convert post variables to DB format
 if ($action == "exit") {
@@ -44,7 +46,8 @@ if ($conn->connect_error) {
 $sql = "INSERT INTO $dbtable (timestamp, action, gate)
 VALUES (FROM_UNIXTIME($timestamp), $action, $gate)";
 
-echo "SQL query: " . $sql;
+# Show SQL query
+echo "SQL query: " . $sql . "<br>";
 
 # Check query
 if ($conn->query($sql) === TRUE) {
