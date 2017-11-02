@@ -35,4 +35,6 @@ def Classify(image_path):
 	    human_string = label_lines[top_k[0]]
 	    score = predictions[0][top_k[0]]
 	    #print('%s (score = %.5f)' % (human_string, score))
+
+	    # Send the highest scored action 
 	    ValidatePost(human_string, score)

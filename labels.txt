@@ -1,2 +1,2 @@
-saida
-entrada
+exit
+entrance
