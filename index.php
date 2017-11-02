@@ -1,15 +1,18 @@
 <?php
 
+# Receive post data
 $body = file_get_contents('php://input');
 $body = trim($body);
 $obj = json_decode($body, true);
 
+# Set variables to post data
 $timestamp = $obj['timestamp'];
 $action = $obj['action'];
 $gate = $obj['gate'];
 
 #var_dump($obj);
 
+# Convert post variables to DB format
 if ($action == "entrance") {
     $action = 1;
 } elseif ($action == "exit") {
@@ -22,8 +25,7 @@ if ($gate == "main") {
     $gate = 2;
 }
 
-
-# DB credentials
+# Set DB credentials
 $servername = 'localhost';
 $username = 'root';
 $password = '';
@@ -38,16 +40,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+# Create query
 $sql = "INSERT INTO $dbtable (timestamp, action, gate)
 VALUES (FROM_UNIXTIME($timestamp), $action, $gate)";
+
 #echo $sql;
 
+# Check query
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
+# Close connection
 $conn->close();
 
 ?>
