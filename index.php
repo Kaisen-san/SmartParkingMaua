@@ -39,7 +39,7 @@ if ($conn->connect_error) {
 }
 
 $sql = "INSERT INTO $dbtable (timestamp, action, gate)
-VALUES ($timestamp, $action, $gate)";
+VALUES (FROM_UNIXTIME($timestamp), $action, $gate)";
 #echo $sql;
 
 if ($conn->query($sql) === TRUE) {
