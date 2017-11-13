@@ -47,5 +47,6 @@ def ClassifyImg():
             # Linha em branco no log
             print()
 
+
 if (__name__ == '__main__'):
     ClassifyImg()

@@ -15,10 +15,10 @@ def Classify(image_path):
 
 	# Loads label file, strips off carriage return
 	label_lines = [line.rstrip() for line 
-                   in tf.gfile.GFile("labels.txt")]
+                   in tf.gfile.GFile("classifier_labels.txt")]
 
 	# Unpersists graph from file
-	with tf.gfile.FastGFile("graph.pb", 'rb') as f:
+	with tf.gfile.FastGFile("classifier_graph.pb", 'rb') as f:
 	    graph_def = tf.GraphDef()
 	    graph_def.ParseFromString(f.read())
 	    tf.import_graph_def(graph_def, name='')
@@ -32,9 +32,9 @@ def Classify(image_path):
 	    
 	    # Sort to show labels of first prediction in order of confidence
 	    top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
-	    human_string = label_lines[top_k[0]]
+	    action = label_lines[top_k[0]]
 	    score = predictions[0][top_k[0]]
-	    print('Image classified as: %s (score = %.5f)' % (human_string, score))
+	    print("Image classified as: %s (score = %.5f)" % (action, score))
 
 	    # Send the highest scored action 
-	    ValidatePost(human_string, score)
+	    ValidatePost(action, score)
