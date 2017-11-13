@@ -39,13 +39,13 @@ For further information, visit: ``https://github.com/samjabrahams/tensorflow-on-
 
 
 ### Installing GPIO
-Use the following command to install GPIO dependencies.
+Use the following command to install GPIO dependencies:
 ```
 sudo apt-get install python-rpi.gpio
 ```
 
 ### Cloning SD card image
-In case you want to clone SD card after everything has been installed, you can use the imageUSB program at: ``https://imageusb.br.uptodown.com/windows``
+In case you want to clone SD card after everything has been installed, you can use the ``imageUSB`` program at: ``https://imageusb.br.uptodown.com/windows``
 
 If you have any doubts on how to use it, take a look on the following tutorial: ``https://www.tecmundo.com.br/pendrive/54921-criar-imagem-pendrive-clona-lo.htm``
 
@@ -56,8 +56,8 @@ Download the solution using the following command (I recommend cloning it into *
 git clone "https://github.com/KaisenSan/SmartParkingMaua"
 ```
 
-### Running the solution:
-In order to run the solution, you will need a webcam supported by the pygame library and a proximity sensor connected in the IOs shown in the image below:
+### Running the solution
+In order to run the solution, you will need a webcam supported by the ``pygame library`` and a proximity sensor connected in the IOs shown in the image below:
 
 ![Sensor setup](sensor_setup.jpg?raw=true "Sensor setup")
 
