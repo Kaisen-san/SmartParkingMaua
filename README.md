@@ -63,14 +63,16 @@ In order to run the solution, you will need a webcam supported by the pygame lib
 
 Feel free to change the code in order to make it runnable with your ends.
 
-Having everything set up, go to SmartParkingMaua folder and execute the following commands in different terminals:
+Having everything set up, go to ``SmartParkingMaua`` folder and execute the following commands in different terminals:
 ```
 python3 captureImg.py
 python3 classifyImg.py
 ```
 
 The former is responsable for capturing the images when the sensor detects something within its range.
-The later is responsable for classifying and posting the results into the database.
+The later is responsable for classifying and deleting the images and posting the results into the database.
+
+If you want to see the images being captured and deleted, check the ``SmartParkingMaua/images`` folder inside ``HOME`` folder.
 
 And that's it!
 
